@@ -24,7 +24,7 @@ body {
 
 @font-face {
     font-family: bgothl;
-    src: url(bgothl.ttf);
+    src: url(/styles/bgothl.ttf);
 }
 
 /* NAVBAR */

@@ -4,7 +4,8 @@
 	"description": "A web app that encourages young interest in the US Constitution.",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js"
+		"start": "node server.js",
+		"nodemon": "nodemon server.js"
 	},
 	"license": "MIT",
 	"keywords": [
@@ -13,6 +14,7 @@
 	],
 	"author": "superTyDev",
 	"dependencies": {
+		"compression": "^1.7.4",
 		"ejs": "^3.1.8",
 		"express": "^4.18.1",
 		"sprightly": "^1.0.3"
