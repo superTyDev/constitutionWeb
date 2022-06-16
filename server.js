@@ -16,6 +16,7 @@ if (process.env.FLASK_ENV != "development") {
 	});
 }
 
+// Set up templates
 app.set("views", "./views"); // specify the views directory (its ./views by default)
 app.set("view engine", "ejs"); // register the template engine
 app.use(express.static("public"));
@@ -34,16 +35,35 @@ app.use(
 	})
 );
 
+// Home
 app.get("/", (req, res) => {
 	res.render("index", {
 		title: "Home",
 	});
 });
 
+// All Found Pages
 app.get("/:page", (req, res) => {
 	res.render(req.params.page, {
 		title: req.params.page,
 	});
+});
+
+// Error Page
+app.use((error, req, res, next) => {
+	console.log("Error Handling Middleware called");
+	console.log("Path: ", req.path);
+	console.error("Error: ", error);
+
+	if (error.message.indexOf("Failed to lookup view") != -1) {
+		errorMessage =
+			"We searched all over, but no file was found at " + req.path + ".";
+		res
+			.status(404)
+			.render("error", { errorNum: 404, errorMessage: errorMessage });
+	} else {
+		next(error);
+	}
 });
 
 app.listen(port, console.log("running"));
