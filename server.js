@@ -44,8 +44,9 @@ app.get("/", (req, res) => {
 
 // All Found Pages
 app.get("/:page", (req, res) => {
+	capTitle = req.params.page[0].toUpperCase() + req.params.page.substring(1);
 	res.render(req.params.page, {
-		title: req.params.page,
+		title: capTitle,
 	});
 });
 

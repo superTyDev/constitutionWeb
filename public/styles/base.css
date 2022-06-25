@@ -27,6 +27,10 @@ body {
     src: url(/styles/bgothl.ttf);
 }
 
+.hidden {
+    opacity: 0;
+}
+
 /* NAVBAR */
 .topnav {
     overflow: hidden;
@@ -67,7 +71,7 @@ body {
     color: var(--text-primary) !important;
 }
 
-.topnav a:after {
+.topnav a::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -80,7 +84,7 @@ body {
     transition: transform 0.25s ease-out;
 }
 
-.topnav a:hover:after {
+.topnav a:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
@@ -146,6 +150,7 @@ footer .social {
     flex-wrap: wrap;
     justify-content: center;
     padding: 5px;
+    margin-bottom: 5px;
 }
 
 footer .social a {
@@ -156,7 +161,7 @@ footer .social a {
 }
 
 footer .social a:hover {
-    transform: rotate(360deg);
+    transform: rotate(360deg) scale(1.5);
 }
 
 footer .copyright {

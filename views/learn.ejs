@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="theme-light">
+	<head>
+		<%- include('head', {title: title}); -%>
+
+		<style>
+			main {
+				padding: 0px 10vh;
+			}
+			.collapsibleCont {
+				padding-top: 20px;
+			}
+			.collapsibleCont .collapsible {
+				background-color: var(--color-nav);
+				color: var(--text-nav);
+				cursor: pointer;
+				padding: 18px;
+				width: 100%;
+				border: none;
+				text-align: left;
+				outline: none;
+				font-size: 15px;
+
+				position: relative;
+				font-size: 1.17em;
+				font-weight: bold;
+				margin: 10px 0;
+			}
+
+			.collapsibleCont .collapsible::before {
+				content: "";
+				position: absolute;
+				width: 100%;
+				transform: scaleX(0);
+				height: 2px;
+				bottom: 1px;
+				left: 0;
+				background-color: var(--color-primary);
+				transform-origin: bottom right;
+				transition: transform 0.25s ease-out;
+			}
+
+			.collapsibleCont .collapsible:hover::before {
+				transform: scaleX(1);
+				transform-origin: bottom left;
+			}
+
+			.collapsibleCont .collapsible.active {
+				background-color: var(--color-primary);
+				color: var(--text-primary);
+			}
+
+			.collapsibleCont .collapsible:after {
+				content: "\002B";
+				color: var(--text-nav);
+				font-weight: bold;
+				float: right;
+				margin-left: 5px;
+			}
+
+			.collapsibleCont .active:after {
+				content: "\2212";
+				color: var(--text-primary);
+			}
+			.collapsibleCont .collapsible.active + .content {
+				padding-bottom: 20px;
+			}
+
+			.collapsibleCont .content {
+				padding: 0 18px;
+				max-height: 0;
+				overflow: hidden;
+				transition: max-height 0.2s ease-out;
+			}
+			.collapsibleCont .content a {
+				background-color: var(--color-primary);
+				background-image: linear-gradient(
+					to right,
+					var(--color-primary-dark),
+					var(--color-primary-light)
+				);
+				background-size: calc(100% + 10px), 100%;
+				background-position: -10px 0;
+				transition: all 0.5s;
+				color: var(--text-primary);
+				padding: 10px 15px;
+				text-transform: uppercase;
+				text-decoration: none;
+				border-radius: 25px;
+				/* box-shadow: 0 20px 50px 10px rgb(20 61 80 / 15%); */
+				white-space: nowrap;
+			}
+
+			.collapsibleCont .content a i {
+				margin-left: 10px;
+				transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 2);
+			}
+
+			.collapsibleCont .content a:hover {
+				background-position: 0 0;
+			}
+
+			.collapsibleCont .content a:hover i {
+				margin-left: 20px;
+			}
+		</style>
+	</head>
+	<body onload="document.getElementById('learn').classList.add('active')">
+		<%- include('nav'); -%>
+		<main>
+			<div class="collapsibleCont">
+				<h2>Articles</h2>
+				<button class="collapsible">The Convention</button>
+				<div class="content">
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						aliquip ex ea commodo consequat.
+					</p>
+				</div>
+				<button class="collapsible">National Buildings</button>
+				<div class="content">
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						aliquip ex ea commodo consequat.
+					</p>
+				</div>
+				<button class="collapsible">Flags and Symbols</button>
+				<div class="content">
+					<p>
+						The US has much more than just the 50 stars. Learn about earlier
+						flags, the seal, and more in this slideshow.
+					</p>
+					<a href="/learn/flag"
+						>See the Symbols<i class="fas fa-arrow-right"></i
+					></a>
+					<hr class="hidden" />
+				</div>
+				<button class="collapsible">Constitution</button>
+				<div class="content">
+					<p>
+						Could I really have a constitution website that doesn't have the
+						constitution?
+					</p>
+					<a href="/learn/constitution"
+						>Read the Constitution<i class="fas fa-arrow-right"></i
+					></a>
+					<hr class="hidden" />
+				</div>
+			</div>
+		</main>
+		<%- include('foot'); -%>
+		<script>
+			var coll = document.getElementsByClassName("collapsible");
+			var i;
+
+			for (i = 0; i < coll.length; i++) {
+				coll[i].addEventListener("click", function () {
+					this.classList.toggle("active");
+					var content = this.nextElementSibling;
+					if (content.style.maxHeight) {
+						content.style.maxHeight = null;
+					} else {
+						content.style.maxHeight = content.scrollHeight + "px";
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

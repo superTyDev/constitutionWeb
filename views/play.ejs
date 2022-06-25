@@ -2,10 +2,100 @@
 <html class="theme-light">
 	<head>
 		<%- include('head', {title: title}); -%>
+
+		<style>
+			main {
+				padding: 0px 10px;
+			}
+			.cardHolder {
+				width: 100%;
+				height: 100%;
+
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				padding-top: 10px;
+			}
+			.card {
+				flex: 1;
+				margin: 10px;
+				max-width: 550px;
+				min-width: 250px;
+				position: relative;
+			}
+			.card img {
+				width: 100%;
+				height: auto;
+				display: block;
+			}
+			.overlay {
+				position: absolute;
+				bottom: 100%;
+				left: 0;
+				right: 0;
+				background-color: var(--color-primary);
+				color: var(--text-primary);
+				overflow: hidden;
+				width: 100%;
+				height: 0;
+				transition: 0.5s ease;
+			}
+			.card:hover .overlay {
+				bottom: 0;
+				height: 100%;
+			}
+			.overlay .text {
+				color: white;
+				font-size: 20px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				text-align: center;
+			}
+		</style>
 	</head>
-	<body>
+	<body onload="document.getElementById('play').classList.add('active')">
 		<%- include('nav'); -%>
-		<main>hello</main>
+		<main>
+			<div class="cardHolder">
+				<a class="card" href="/play/chaos">
+					<img
+						src="/imgs/convention chaos.jpg"
+						alt="Convention Chaos Game Icon"
+					/>
+					<div class="overlay">
+						<div class="text">
+							Play Convention Chaos <i class="fas fa-arrow-right"></i>
+						</div>
+					</div>
+				</a>
+				<a class="card" href="/play/trivia">
+					<img
+						src="/imgs/timeline trivia.jpg"
+						alt="Timeline Trivia Game Icon"
+					/>
+					<div class="overlay">
+						<div class="text">
+							Play Timeline Trivia <i class="fas fa-arrow-right"></i>
+						</div>
+					</div>
+				</a>
+				<a class="card" href="/play/amendments">
+					<div class="image">
+						<img src="/imgs/amendments.jpg" alt="The Amendments Game Icon" />
+					</div>
+					<div class="overlay">
+						<div class="text">
+							Play The Amendments Game <i class="fas fa-arrow-right"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+		</main>
 		<%- include('foot'); -%>
 	</body>
 </html>
