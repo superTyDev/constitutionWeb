@@ -25,6 +25,8 @@
 				border-bottom: 2px solid #ef7900;
 			}
 			#emailLink {
+				color: #ef7900;
+				text-decoration: none;
 			}
 		</style>
 	</head>
@@ -35,7 +37,7 @@
 				<p><%= errorMessage %></p>
 				<p>
 					If you believe you have reached this error in *error* you can contact
-					the developer @
+					the developer at
 					<a
 						href="znvygb:gl.zpyle@tznvy.pbz"
 						onmouseover="reveal(this)"
@@ -76,7 +78,7 @@
 			function reveal(elem) {
 				if (elem.href.indexOf("mailto:") == -1) {
 					elem.href = encode(elem.href);
-					elem.textContent = elem.href.split("mailto:");
+					elem.textContent = elem.href.split("mailto:")[1];
 				}
 			}
 		</script>

@@ -93,7 +93,7 @@ body {
 main {
     margin-top: 50px;
     background-color: var(--color-background);
-    min-height: calc(100vh - calc(90px + 25vh));
+    min-height: calc(100vh - calc(50px + 25vh));
 }
 
 /* FOOTER */
@@ -140,6 +140,29 @@ footer .right a:hover {
     color: var(--text-secondary);
 }
 
+footer .social {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+}
+
+footer .social a {
+    font-size: 25px;
+    transition: transform .5s ease-in-out;
+    text-decoration: none;
+    color: var(--text-primary)
+}
+
+footer .social a:hover {
+    transform: rotate(360deg);
+}
+
+footer .copyright {
+    text-align: center;
+}
+
 /* RESPONSIVE STYLES */
 @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {
@@ -153,11 +176,6 @@ footer .right a:hover {
 
     .topnav.responsive {
         height: 200px;
-    }
-
-    .topnav.response,
-    main {
-        margin-top: 0;
     }
 
     .topnav.responsive .icon {
