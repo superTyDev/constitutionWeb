@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="en">
+	<head>
+		<%- include('head', {title: title}); -%>
+
+		<style>
+			/* slideshow */
+			.mySlides {
+				display: none;
+				height: 100%;
+				width: 100%;
+			}
+
+			/* Slideshow container */
+			.slideshow-container {
+				width: 100%;
+				height: 80vh;
+				margin: auto;
+				position: relative;
+			}
+
+			.mySlides img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.mySlides .text {
+				/* background-color: #f2f2f299; */
+				background-image: radial-gradient(
+					circle,
+					#f2f2f2ee,
+					#f2f2f299 70%,
+					transparent
+				);
+
+				color: black;
+				font-size: 15px;
+				padding: 8px 12px;
+				padding-right: 40px;
+				text-align: center;
+
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				width: 25%;
+				min-width: 225px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.mySlides .text p {
+				padding-bottom: 1em;
+			}
+
+			.mySlides .text a {
+				background-color: var(--color-primary);
+				background-image: linear-gradient(
+					to right,
+					var(--color-primary-dark),
+					var(--color-primary-light)
+				);
+				background-size: calc(100% + 10px), 100%;
+				background-position: -10px 0;
+				transition: all 0.5s;
+				color: var(--text-primary);
+				padding: 10px 15px;
+				text-transform: uppercase;
+				text-decoration: none;
+				border-radius: 25px;
+				box-shadow: 0 20px 50px 10px rgb(20 61 80 / 15%);
+				white-space: nowrap;
+			}
+
+			.mySlides .text a i {
+				margin-left: 10px;
+				transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 2);
+			}
+
+			.mySlides .text a:hover {
+				background-position: 0 0;
+			}
+
+			.mySlides .text a:hover i {
+				margin-left: 20px;
+			}
+
+			.control {
+				text-align: center;
+				position: relative;
+				background-color: rgba(0, 0, 0, 0.2);
+				height: 40px;
+				top: -40px;
+				transition: 0.6s ease;
+			}
+
+			.control:hover {
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+
+			/* Next & previous buttons */
+			.prev,
+			.next {
+				cursor: pointer;
+				position: absolute;
+				top: 50%;
+				width: auto;
+				padding: 8px 12px;
+				margin-top: -20px;
+				color: #ffffffaa;
+				font-weight: bold;
+				font-size: 18px;
+				transition: 0.6s ease;
+				border-radius: 0 8px 8px 0;
+				user-select: none;
+				left: 0;
+			}
+
+			.next {
+				left: auto;
+				right: 0;
+				border-radius: 8px 0 0 8px;
+			}
+
+			.prev:hover,
+			.next:hover {
+				background-color: rgba(0, 0, 0, 0.95);
+				color: #ffffffff;
+			}
+
+			.dot {
+				cursor: pointer;
+				height: 14px;
+				width: 14px;
+				margin: 13px 2px;
+				background-color: #bbbbbbcc;
+				border-radius: 50%;
+				display: inline-block;
+				transition: background-color 0.6s ease;
+			}
+
+			.control .active,
+			.control .dot:hover {
+				background-color: #717171;
+			}
+
+			/* Fading animation */
+			.fade {
+				animation-name: fade;
+				animation-duration: 1.5s;
+			}
+
+			@keyframes fade {
+				from {
+					opacity: 0.4;
+				}
+
+				to {
+					opacity: 1;
+				}
+			}
+
+			/* action cards */
+			.cardAction {
+				padding: 20px 20%;
+				margin-bottom: 40px;
+			}
+
+			.cardAction .card {
+				display: flex;
+				flex-wrap: wrap;
+				padding: 25px 0;
+			}
+
+			.cardAction .card .image {
+				width: auto;
+				height: auto;
+				perspective: 1000px;
+			}
+
+			.cardAction .card .image,
+			.cardAction .card .content {
+				width: 50%;
+			}
+
+			.cardAction .card .image img {
+				object-fit: cover;
+				min-width: 100px;
+				width: 100%;
+				height: 100%;
+
+				flex: 1;
+				border-radius: 10px;
+				transition: transform 0.5s;
+				transform-style: preserve-3d;
+				box-shadow: 5px 5px 15px 5px rgb(20 61 80 / 15%);
+			}
+
+			.cardAction .card .image:hover img {
+				transform: rotateY(20deg);
+			}
+
+			.cardAction .card .content {
+				flex: 1;
+				padding-left: 20px;
+			}
+
+			.cardAction .card .image.backwards:hover img {
+				transform: rotateY(-20deg);
+			}
+
+			.cardAction .card .content.backwards {
+				padding-left: 0;
+				padding-right: 20px;
+			}
+
+			.cardAction .card a {
+				background-color: var(--color-primary);
+				background-image: linear-gradient(
+					to right,
+					var(--color-primary-dark),
+					var(--color-primary-light)
+				);
+				background-size: calc(100% + 10px), 100%;
+				background-position: -10px 0;
+				transition: all 0.5s;
+
+				color: var(--text-primary);
+				padding: 10px 15px;
+				text-transform: uppercase;
+				text-decoration: none;
+				border-radius: 25px;
+				box-shadow: 0 20px 50px 10px rgb(20 61 80 / 15%);
+				white-space: nowrap;
+			}
+
+			.cardAction .card a i {
+				margin-left: 10px;
+				transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 2);
+			}
+
+			.cardAction .card a:hover {
+				background-position: 0 0;
+			}
+
+			.cardAction .card a:hover i {
+				margin-left: 20px;
+			}
+
+			#cardSeeMore {
+				margin: auto;
+				min-width: 50%;
+				text-align: center;
+			}
+
+			/* about */
+			.about {
+				background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='100%' preserveAspectRatio='none' viewBox='0 0 1980 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1013%26quot%3b)' fill='none'%3e%3crect width='1980' height='1080' x='0' y='0' fill='rgba(239%2c 121%2c 0%2c 1)'%3e%3c/rect%3e%3cpath d='M99 269L98 -155' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1217 710L1216 110' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M714 356L713 872' stroke-width='6' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M344 293L343 -143' stroke-width='10' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M305 430L304 784' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1005 526L1004 903' stroke-width='10' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1158 324L1157 1089' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M466 77L465 758' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1286 44L1285 -590' stroke-width='8' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M146 786L145 259' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1374 269L1373 679' stroke-width='8' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M287 166L286 -517' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M93 1000L92 1747' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M922 27L921 306' stroke-width='8' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1406 71L1405 431' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M314 1063L313 1509' stroke-width='6' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M222 450L221 1164' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1837 646L1836 -49' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1305 448L1304 -275' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1864 729L1863 1440' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1974 401L1973 -61' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1677 721L1676 229' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M765 309L764 -449' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1322 715L1321 1495' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M238 148L237 812' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1848 541L1847 979' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1252 157L1251 483' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1847 977L1846 356' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M269 917L268 1532' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M362 198L361 -162' stroke-width='6' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1010 206L1009 -301' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1820 335L1819 51' stroke-width='10' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1238 353L1237 892' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M4 146L3 -124' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M808 1043L807 749' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M883 374L882 773' stroke-width='6' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1250 343L1249 -60' stroke-width='8' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1511 23L1510 636' stroke-width='6' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M24 1066L23 758' stroke-width='6' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M152 862L151 102' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M1314 911L1313 150' stroke-width='10' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M155 166L154 799' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1699 13L1698 677' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1472 570L1471 1368' stroke-width='8' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M617 654L616 34' stroke-width='6' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M831 702L830 90' stroke-width='8' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M594 92L593 -413' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1530 556L1529 1132' stroke-width='10' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3cpath d='M1703 615L1702 -192' stroke-width='10' stroke='url(%23SvgjsLinearGradient1015)' stroke-linecap='round' class='Up'%3e%3c/path%3e%3cpath d='M187 697L186 1225' stroke-width='8' stroke='url(%23SvgjsLinearGradient1014)' stroke-linecap='round' class='Down'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1013'%3e%3crect width='1980' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='0%25' y1='0%25' x2='0%25' y2='100%25' id='SvgjsLinearGradient1014'%3e%3cstop stop-color='rgba(255%2c 169%2c 65%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(255%2c 169%2c 65%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1015'%3e%3cstop stop-color='rgba(255%2c 169%2c 65%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(255%2c 169%2c 65%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+				background-attachment: fixed;
+				background-position: center;
+				background-size: cover;
+
+				min-height: 20vh;
+				margin-bottom: 60px;
+				padding: 20px 20%;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.about .tabcontainer {
+				box-shadow: 5px 5px 15px 5px rgb(20 61 80 / 15%);
+			}
+
+			.about .tab {
+				overflow: hidden;
+				background-color: #f1f1f1aa;
+				display: flex;
+				width: 100%;
+			}
+
+			.about .tab button {
+				flex: 1;
+				background-color: inherit;
+				border: none;
+				outline: none;
+				cursor: pointer;
+				transition: 0.3s;
+				position: relative;
+			}
+
+			.about .tab button:after {
+				content: "";
+				position: absolute;
+				width: 100%;
+				transform: scaleX(0);
+				height: 2px;
+				bottom: 1px;
+				left: 0;
+				background-color: var(--color-primary);
+				transform-origin: bottom right;
+				transition: transform 0.25s ease-out;
+			}
+
+			.about .tab button:hover:after {
+				transform: scaleX(1);
+				transform-origin: bottom left;
+			}
+
+			.about .tab button:hover {
+				background-color: #ddd;
+			}
+
+			.about .tab button.active {
+				background-color: #ccc;
+			}
+
+			.about .tabcontent {
+				display: none;
+				padding: 6px 12px;
+				background-color: #f1f1f188;
+			}
+
+			/* quotes */
+			.quotes {
+				padding: 20px 20%;
+				padding-bottom: 200px;
+
+				--s: 200px;
+				/* size  */
+				--m: 4px;
+				/* margin */
+				--f: calc(1.732 * var(--s) + 4 * var(--m) - 1px);
+				position: relative;
+			}
+
+			.quotesInt {
+				display: flex;
+			}
+
+			.hexcontainer {
+				font-size: 0;
+			}
+
+			.hexcontainer * {
+				overflow: hidden;
+				object-fit: cover;
+				transition: all 0.5s ease;
+				filter: brightness(98%);
+			}
+
+			.hexcontainer > * {
+				width: var(--s);
+				margin: var(--m);
+				height: calc(var(--s) * 1.1547);
+				display: inline-block;
+				font-size: initial;
+				margin-bottom: calc(var(--m) - var(--s) * 0.2885);
+				position: relative;
+				clip-path: polygon(
+					0% 25%,
+					0% 75%,
+					50% 100.1%,
+					100.1% 75%,
+					100.1% 25%,
+					50% 0%
+				);
+				box-shadow: 5px 5px 15px 5px rgb(20 61 80 / 15%);
+				background: var(--color-primary-light);
+			}
+
+			.quotes:hover .hexcontainer * {
+				filter: brightness(98%) grayscale(80%);
+			}
+
+			.quotes:hover .hexcontainer > *:hover {
+				filter: brightness(104%);
+				transform: scale(1.2);
+				z-index: 2;
+			}
+
+			.hexcontainer > *:nth-child(odd) {
+				background: var(--color-secondary);
+			}
+
+			.hexcontainer * .text {
+				position: absolute;
+				top: 60px;
+				left: 15px;
+				width: calc(var(--s) - 30px);
+				height: calc(calc(var(--s) * 1.1547) - 120px);
+
+				margin: -0.5px;
+				color: white;
+				clip-path: none;
+				text-align: center;
+				font-size: 20px;
+				background-color: transparent;
+				text-shadow: 1px 1px 3px #474747;
+			}
+
+			.hexcontainer * .text span {
+				display: block;
+			}
+
+			.hexcontainer.active {
+				position: fixed;
+				top: 0;
+				right: 0;
+				left: 0;
+				bottom: 0;
+				background-color: #000000ee;
+				z-index: 11;
+				transition: background-color 0.5s;
+			}
+
+			.fa-xmark:hover + .hexcontainer.active {
+				background-color: #000000cc;
+			}
+
+			.hexcontainer.active * .text span {
+				font-family: "Blackadder ITC", cursive;
+				font-size: 40px;
+				margin-top: 10px;
+			}
+
+			.quotesInt .fa-xmark {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				color: white;
+				z-index: 12;
+				font-size: 30px;
+				padding: 8px 16px;
+				border-radius: 20px;
+				transition: background-color 0.5s;
+				display: none;
+			}
+
+			.quotesInt .fa-xmark:hover {
+				background-color: rgba(0, 0, 0, 0.95);
+				box-shadow: 0 20px 50px 10px rgb(20 61 80 / 15%);
+			}
+
+			.hexcontainer.active > * {
+				display: none;
+			}
+
+			.hexcontainer.active > .active {
+				display: block;
+				clip-path: none;
+				position: absolute;
+				top: 20%;
+				right: 50%;
+				transform: translateX(50%);
+				filter: brightness(100%);
+				width: min(70vh, 70vw);
+				height: auto;
+				overflow: visible;
+			}
+
+			.hexcontainer.active > .active .text {
+				width: 100%;
+				height: auto;
+				font-size: 25px;
+				background-color: none;
+			}
+
+			.hexcontainer.active > .active:hover {
+				transform: translateX(50%) scale(1.2);
+			}
+
+			.hexcontainer::before {
+				content: "";
+				width: calc(var(--s) / 2 + var(--m));
+				float: left;
+				height: 120%;
+				shape-outside: repeating-linear-gradient(
+					#0000 0 calc(var(--f) - 3px),
+					#000 0 var(--f)
+				);
+			}
+
+			/* get started */
+			.getStarted {
+				background-color: var(--color-secondary);
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' %3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='0' y1='0' y2='1' gradientTransform='rotate(0,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%23320D6D'/%3E%3Cstop offset='1' stop-color='%239365CE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpattern id='b' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Ccircle fill='%23FFFFFF' cx='10' cy='10' r='10'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23a)'/%3E%3Crect width='100%25' height='100%25' fill='url(%23b)' fill-opacity='0.12'/%3E%3C/svg%3E");
+				background-attachment: fixed;
+
+				color: var(--text-secondary);
+				padding: 20px 20%;
+				display: flex;
+			}
+
+			.getStarted .left,
+			.getStarted .right {
+				width: 100%;
+			}
+
+			.getStarted .right {
+				margin-left: 20px;
+				line-height: 22px;
+			}
+
+			#svgBuilding {
+				color: var(--text-secondary);
+				stroke: var(--text-secondary);
+				stroke-width: 5px;
+			}
+
+			.getStarted a {
+				font-weight: bold;
+				color: inherit;
+				padding: 2px 4px;
+				border-radius: 4px;
+				transition: all 0.75s;
+			}
+
+			.getStarted a:hover {
+				background-color: var(--text-secondary);
+				color: var(--color-secondary);
+			}
+
+			/* keep exploring */
+			.keepExploring {
+				padding: 20px 20%;
+			}
+
+			.keepExploring .links {
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			.keepExploring .links a {
+				padding: 10px 20px;
+				margin: 10px;
+				flex: 1;
+				background-color: var(--color-primary-light);
+				color: var(--text-primary);
+				text-align: center;
+				text-decoration: none;
+				min-width: 130px;
+			}
+
+			.keepExploring .links a:hover {
+				filter: brightness(90%);
+				box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.1);
+			}
+
+			/* RESPONSIVE STYLES */
+			@media screen and (max-width: 600px) {
+				.mySlides .text {
+					top: unset;
+					width: unset;
+					right: 0;
+					height: 40%;
+					min-height: 150px;
+					background-image: radial-gradient(
+						circle,
+						#f2f2f2ee,
+						#f2f2f266 90%,
+						transparent
+					);
+					padding-bottom: 40px;
+				}
+
+				.cardAction .card .content {
+					padding-left: 0;
+					padding-right: 10px;
+				}
+
+				.cardAction .card .content.backwards {
+					order: 2;
+				}
+
+				.quotes {
+					--s: 100px;
+				}
+
+				.hexcontainer * .text {
+					top: 25px;
+					left: 10px;
+					font-size: 12px;
+					width: calc(var(--s) - 20px);
+					height: calc(calc(var(--s) * 1.1547) - 45px);
+				}
+			}
+
+			@media only screen and (max-width: 300px) {
+				.prev,
+				.next,
+				.text {
+					font-size: 11px;
+				}
+			}
+		</style>
+	</head>
+	<body onload="document.getElementById('home').classList.add('active')">
+		<%- include('nav'); -%>
+		<main>
+			<div class="slideshow-container">
+				<div class="mySlides fade">
+					<img
+						src="/imgs/convention.jpg"
+						alt="Painting of The Constitutional Convention"
+					/>
+					<div class="text">
+						<div>
+							<h1>The Constitutional Convention of 1787</h1>
+							<p>
+								Learn more about the key participants of the constitutional
+								convention in this interactive history exploration!
+							</p>
+							<a href="/learn/convention"
+								>Explore the Convention<i class="fas fa-arrow-right"></i
+							></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="mySlides fade">
+					<img src="/imgs/capitol.jpg" alt="US Capitol" />
+					<div class="text">
+						<div>
+							<h1>US Capitol and Other Buildings</h1>
+							<p>
+								Learn more about the key participants of the constitutional
+								convention in this interactive history exploration!
+							</p>
+							<a href="/learn/capitol"
+								>Investigate the Buildings<i class="fas fa-arrow-right"></i
+							></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="mySlides fade">
+					<img src="/imgs/flag.jpg" alt="US Flag" />
+					<div class="text">
+						<div>
+							<h1>History of Our Flag</h1>
+							<p>
+								Learn more about the key participants of the constitutional
+								convention in this interactive history exploration!
+							</p>
+							<a href="/learn/flag"
+								>Learn the Flag<i class="fas fa-arrow-right"></i
+							></a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="control">
+				<span class="dot" onclick="currentSlide(1)"></span>
+				<span class="dot" onclick="currentSlide(2)"></span>
+				<span class="dot" onclick="currentSlide(3)"></span>
+				<a class="prev" onclick="plusSlides(-1)">❮</a>
+				<a class="next" onclick="plusSlides(1)">❯</a>
+			</div>
+
+			<div class="cardAction">
+				<h1>Activities</h1>
+				<div class="card">
+					<div class="image">
+						<img
+							src="/imgs/convention chaos.jpg"
+							alt="Convention Chaos Game Icon"
+						/>
+					</div>
+					<div class="content">
+						<h1>Convention Chaos</h1>
+						<p>Decide who said what and restore order to the convention!</p>
+						<a href="/play/chaos"
+							>Restore the Chaos<i class="fas fa-arrow-right"></i
+						></a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="content backwards">
+						<h1>Timeline Trivia</h1>
+						<p>
+							Do you think you can line up events related to the constitution?
+						</p>
+						<a href="/play/trivia"
+							>Line Them Up <i class="fas fa-arrow-right"></i
+						></a>
+					</div>
+					<div class="image backwards">
+						<img
+							src="/imgs/timeline trivia.jpg"
+							alt="Timeline Trivia Game Icon"
+						/>
+					</div>
+				</div>
+				<div class="card">
+					<div class="image">
+						<img src="/imgs/amendments.jpg" alt="The Amendments Game Icon" />
+					</div>
+					<div class="content">
+						<h1>The Amendments</h1>
+						<p>
+							How well do you know your amendments? Review the amendments with
+							this activity.
+						</p>
+						<a href="/play/amendments"
+							>Check Them Out<i class="fas fa-arrow-right"></i
+						></a>
+					</div>
+				</div>
+				<div class="card">
+					<a href="/play" id="cardSeeMore"
+						>See More<i class="fas fa-arrow-right"></i
+					></a>
+				</div>
+			</div>
+
+			<div class="about">
+				<h1>About</h1>
+				<h2>Initiative</h2>
+				<p>
+					Constitutional America offers a competition where youth create
+					materials to educate others on the constitution.
+				</p>
+				<h2>Purpose</h2>
+				<div class="tabcontainer">
+					<div class="tab">
+						<button class="tablinks active" onclick="openTab(event, 'educate')">
+							<h3>Educate</h3>
+						</button>
+						<button class="tablinks" onclick="openTab(event, 'entertain')">
+							<h3>Entertain</h3>
+						</button>
+					</div>
+
+					<div id="educate" class="tabcontent" style="display: block">
+						<p>
+							Learn about the constitution, its history, and the people
+							involved. In addition, examine events that led up to the
+							constitution.
+						</p>
+					</div>
+
+					<div id="entertain" class="tabcontent">
+						<p>
+							Play games such as trivia and matching to better understand the
+							constitution.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="quotes" id="quotes">
+				<h1>Words of The Leaders</h1>
+				<div class="quotesInt">
+					<i
+						class="fa-solid fa-xmark"
+						id="fa-xmark"
+						onclick="closeImageModal(event, 'hexcontainer')"
+					></i>
+					<div class="hexcontainer" id="hexcontainer">
+						<!-- <div class="item"></div> -->
+						<img class="item" src="/imgs/capitol.jpg" alt="US Capitol" />
+						<img class="item" src="/imgs/flag.jpg" alt="US Flag" />
+						<img
+							class="item"
+							src="/imgs/convention.jpg"
+							alt="The Constitutional Convention"
+						/>
+						<img
+							class="item"
+							src="/imgs/constitutionHex.jpg"
+							alt="US Constitution"
+						/>
+						<img class="item" src="/imgs/usHex.png" alt="Black Map of US" />
+						<img class="item" src="/imgs/sealHex.png" alt="US Seal" />
+
+						<a class="item">
+							<div class="text">
+								We were driven off like rats in five minutes.
+								<span>Roger S.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								Philosophy is common sense with big words.
+								<span>James M.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								Repression will provoke rebellion.
+								<span>Hugh W.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								When the righteous rule, the people rejoice.
+								<span>William P.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								We can't afford to go down the dead end roads of Socialism or
+								Fascistic Bolshevism.
+								<span>John B.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								It is better to offer no excuse than a bad one.
+								<span>George W.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								Lost time is never found again.
+								<span>Ben F.</span>
+							</div>
+						</a>
+						<a class="item">
+							<div class="text">
+								Dying is easy, young man, living is harder.
+								<span>Alex H.</span>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="getStarted" id="svgBuilding">
+				<div class="left">
+					<?xml version="1.0" standalone="no"?>
+					<svg
+						viewBox="0 0 800 600"
+						version="1.1"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						fill-rule="evenodd"
+						xml:space="preserve"
+					>
+						<defs>
+							<clipPath id="clipId0">
+								<path d="M0,600 800,600 800,0 0,0 z" />
+							</clipPath>
+						</defs>
+						<g clip-path="url(#clipId0)" fill="none" />
+						<g clip-path="url(#clipId0)" fill="none">
+							<path
+								id="buildingPath"
+								d="M50.7353,594.118 50.7353,557.353 87.5,557.353 87.5,520.588 124.265,520.588 124.265,483.824 197.794,483.824 197.794,152.941 271.324,152.941 271.324,483.824 308.088,483.824 308.088,152.941 381.618,152.941 381.618,483.824 418.382,483.824 418.382,152.941 491.912,152.941 491.912,483.824 528.676,483.824 528.676,152.941 602.206,152.941 749.265,152.941 749.265,116.176 400,5.88235 50.7353,116.176 50.7353,152.941 602.206,152.941 602.206,483.824 675.735,483.824 675.735,520.588 712.5,520.588 712.5,557.353 749.265,557.353 749.265,594.118 50.7353,594.118 "
+							/>
+						</g>
+					</svg>
+				</div>
+				<div class="right">
+					<h1>Get Started</h1>
+					<p>
+						Check out <a href="/play">games</a> and
+						<a href="/learn">other&nbsp;activities</a> for an interactive
+						exploration on the constution and the history behind it.
+					</p>
+					<p>
+						Be sure to look at the <a href="/learn">mini&nbsp;lessons</a> which
+						lead to a certificate of completion for classroom use!
+					</p>
+					<p>
+						Read famous quotes from constitution signers
+						<a href="#quotes">above</a>.
+					</p>
+				</div>
+			</div>
+			<div class="keepExploring">
+				<h1>Keep Exploring</h1>
+				<p>
+					While this site scratches the surface, here are more links to keep
+					learning about the constituion.
+				</p>
+				<h2>The US Constitution</h2>
+				<div class="links">
+					<a
+						href="https://en.wikipedia.org/wiki/Constitution_of_the_United_States"
+						>Wikipedia</a
+					>
+					<a
+						href="https://www.whitehouse.gov/about-the-white-house/our-government/the-constitution/"
+						>The White House</a
+					>
+					<a
+						href="https://www.constitutionfacts.com/us-constitution-amendments/the-constitutional-convention/"
+						>Constitution Facts</a
+					>
+					<a
+						href="https://constitutioncenter.org/interactive-constitution/white-papers/the-constitutional-convention-of-1787-a-revolution-in-government"
+						>Constitution Center</a
+					>
+					<a href="https://www.youtube.com/watch?v=bO7FQsCcbD8"
+						>Crash Course: The Constitution</a
+					>
+					<a href="https://www.youtube.com/watch?v=kCCmuftyj8A"
+						>Crash Course: Amendments</a
+					>
+				</div>
+				<h2>Constitutions in General</h2>
+				<div class="links">
+					<a
+						href="https://www.britannica.com/topic/constitution-politics-and-law"
+						>Britannica</a
+					>
+					<a href="https://www.constituteproject.org/">Constitute Project</a>
+				</div>
+			</div>
+		</main>
+		<%- include('foot'); -%>
+
+		<script>
+			function responsiveNav() {
+				var x = document.getElementById("myTopnav");
+				x.classList.toggle("responsive");
+			}
+
+			let slideIndex = 1;
+			showSlides(slideIndex);
+
+			function plusSlides(n) {
+				showSlides((slideIndex += n));
+			}
+
+			function currentSlide(n) {
+				showSlides((slideIndex = n));
+			}
+
+			function showSlides(n) {
+				let i;
+				let slides = document.getElementsByClassName("mySlides");
+				let dots = document.getElementsByClassName("dot");
+				if (n > slides.length) {
+					slideIndex = 1;
+				}
+				if (n < 1) {
+					slideIndex = slides.length;
+				}
+				for (i = 0; i < slides.length; i++) {
+					slides[i].style.display = "none";
+				}
+				for (i = 0; i < dots.length; i++) {
+					dots[i].className = dots[i].className.replace(" active", "");
+				}
+				slides[slideIndex - 1].style.display = "block";
+				dots[slideIndex - 1].className += " active";
+				clearTimeout(window.changeSlide);
+				window.changeSlide = setTimeout(() => {
+					plusSlides(1);
+				}, 5000);
+			}
+
+			changeSlide = setTimeout(() => {
+				plusSlides(1);
+			}, 5000);
+
+			function openTab(evt, tabName) {
+				var i, tabcontent, tablinks;
+				tabcontent = document.getElementsByClassName("tabcontent");
+				for (i = 0; i < tabcontent.length; i++) {
+					tabcontent[i].style.display = "none";
+				}
+				tablinks = document.getElementsByClassName("tablinks");
+				for (i = 0; i < tablinks.length; i++) {
+					tablinks[i].classList.remove("active");
+				}
+				document.getElementById(tabName).style.display = "block";
+				evt.currentTarget.classList.add("active");
+			}
+
+			// Shuffle Quotes
+			var items = document.querySelectorAll(".item");
+			document.getElementById("hexcontainer").innerHTML = "";
+			Array.from(items)
+				.sort(function () {
+					return Math.random() - 0.5;
+				})
+				.forEach((elem) => {
+					document.getElementById("hexcontainer").append(elem);
+				});
+			document.querySelectorAll(".item").forEach((elem, key, parent) => {
+				document.querySelectorAll(".item")[key].style.animationDelay =
+					String((key + 1) / 8) + "s";
+				document
+					.querySelectorAll(".item")
+					[key].addEventListener("click", imageModal);
+			});
+
+			// Modal on click
+			function imageModal(evt) {
+				console.log("this is big");
+				evt.currentTarget.parentElement.classList.add("active");
+				evt.currentTarget.classList.add("active");
+				document.getElementById("fa-xmark").style.display = "block";
+			}
+			function closeImageModal(evt, target) {
+				console.log(target);
+				document.getElementById(target).classList.remove("active");
+				Array.from(document.getElementById(target).childNodes).forEach(
+					(elem, index) => {
+						document
+							.getElementById(target)
+							.childNodes[index].classList.remove("active");
+					}
+				);
+				document.getElementById("fa-xmark").style.display = "none";
+			}
+
+			var building = document.getElementById("buildingPath");
+			var length = building.getTotalLength();
+			building.style.strokeDasharray = length;
+			building.style.strokeDashoffset = length;
+
+			window.addEventListener("scroll", drawOnScroll);
+
+			function drawOnScroll() {
+				var clientRect = document
+					.getElementById("svgBuilding")
+					.getBoundingClientRect();
+				var scrollpercent = Math.min(
+					Math.max(
+						0,
+						(document.documentElement.clientHeight - clientRect.top) /
+							(clientRect.height + document.documentElement.clientHeight - 400)
+					),
+					1
+				);
+				var draw = length * scrollpercent;
+
+				// Reverse the drawing (when scrolling upwards)
+				building.style.strokeDashoffset = length - draw;
+			}
+		</script>
+	</body>
+</html>
